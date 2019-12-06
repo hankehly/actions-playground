@@ -16,7 +16,10 @@ jobs:
           pyenv install 3.8.0
 
       - name: Install poetry
-        run: python get-poetry.py --preview
+        run: |
+          curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py > get-poetry.py
+          chmod +x get-poetry.py
+          python get-poetry.py --preview
 
       - name: Install python packages
         run: poetry install
