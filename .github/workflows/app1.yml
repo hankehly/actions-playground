@@ -19,6 +19,17 @@ jobs:
         with:
           python-version: "3.8.0"
 
+      - name: Setup local bin folder
+        run: |
+          mkdir -p $GITHUB_WORKSPACE/bin
+          echo "::add-path::$GITHUB_WORKSPACE/bin"
+
+      - name: Download chromedriver
+        run: |
+          wget https://chromedriver.storage.googleapis.com/79.0.3945.36/chromedriver_linux64.zip
+          unzip chromedriver_linux64.zip
+          mv chromedriver $GITHUB_WORKSPACE/bin
+
       - name: Install poetry
         run: |
           curl -O -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py
