@@ -6,17 +6,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
+        with:
+          fetch-depth: 1
 
       - name: Install python packages
         uses: abatilo/actions-poetry@v1.1.0
         with:
           python_version: "3.8.0"
-          poetry_version: "0.12.17"
+          poetry_version: "1.0.0b8"
           args: install
 
       - name: Run tests
         uses: abatilo/actions-poetry@v1.1.0
         with:
           python_version: "3.8.0"
-          poetry_version: "0.12.17"
+          poetry_version: "1.0.0b8"
           args: run python test.py
