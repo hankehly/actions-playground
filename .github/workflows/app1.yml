@@ -19,7 +19,8 @@ jobs:
         with:
           python-version: "3.8.0"
 
-      - uses: nanasess/setup-chromedriver@master
+      - name: Install chromedriver
+        uses: nanasess/setup-chromedriver@master
         with:
           chromedriver-version: "79.0.3945.36"
 
