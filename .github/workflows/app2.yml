@@ -9,5 +9,5 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Setup python
+      - name: Print message
         run: echo "Something in app2 must have changed.."
