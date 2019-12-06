@@ -14,12 +14,14 @@ jobs:
           curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
           export PATH="$HOME/.pyenv/bin:$PATH"
           pyenv install 3.8.0
+          pyenv global 3.8.0
 
       - name: Install poetry
         run: |
-          curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py > get-poetry.py
+          curl -O -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py
           chmod +x get-poetry.py
-          python get-poetry.py --preview
+          python get-poetry.py -yes --preview
+          export PATH="$HOME/.poetry/bin:$PATH"
           source $HOME/.poetry/env
 
       - name: Install python packages
