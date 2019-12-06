@@ -1,9 +1,10 @@
 name: App 1 Workflow
 
-on:
-  push:
-    paths:
-      - 'app1/*'
+#on:
+#  push:
+#    paths:
+#      - 'app1/*'
+on: [push]
 
 jobs:
   build:
@@ -39,5 +40,8 @@ jobs:
       - name: Install python packages
         run: poetry install
 
-      - name: Run tests
-        run: poetry run python app1/test.py
+      - name: Run unit tests
+        run: poetry run python app1/test_unit.py
+
+      - name: Run selenium tests
+        run: poetry run python app1/test_selenium.py
