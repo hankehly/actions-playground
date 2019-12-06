@@ -9,11 +9,11 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Install pyenv
-        run: curl https://pyenv.run | bash
-
       - name: Install python
-        run: pyenv install 3.8.0
+        run: |
+          curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
+          export PATH="$HOME/.pyenv/bin:$PATH"
+          pyenv install 3.8.0
 
       - name: Install poetry
         run: |
