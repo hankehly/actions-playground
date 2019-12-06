@@ -8,23 +8,23 @@ class AddArgs(BaseModel):
     y: int
 
 
-def add(args: AddArgs):
-    return args.x + args.y
+def subtract(args: AddArgs):
+    return args.x - args.y
 
 
-class ATestCase(unittest.TestCase):
+class App2TestCase(unittest.TestCase):
     """
     An example test case
     """
 
     def test_ok(self):
-        act = add(AddArgs(x=1, y=1))
-        self.assertEqual(act, 2)
+        act = subtract(AddArgs(x=2, y=1))
+        self.assertEqual(act, 1)
 
     def test_err(self):
         with self.assertRaises(ValidationError):
             args = AddArgs(x="not an integer", y=1)
-            add(args)
+            subtract(args)
 
 
 if __name__ == "__main__":
