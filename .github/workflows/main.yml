@@ -9,16 +9,17 @@ jobs:
         with:
           fetch-depth: 1
 
+      - name: Install python
+        run: |
+          curl https://pyenv.run | bash
+          exec $SHELL
+          pyenv install 3.8.0
+
+      - name: Install poetry
+        run: python get-poetry.py --preview
+
       - name: Install python packages
-        uses: abatilo/actions-poetry@v1.1.0
-        with:
-          python_version: "3.8.0"
-          poetry_version: "1.0.0b8"
-          args: install
+        run: poetry install
 
       - name: Run tests
-        uses: abatilo/actions-poetry@v1.1.0
-        with:
-          python_version: "3.8.0"
-          poetry_version: "1.0.0b8"
-          args: run python test.py
+        run: poetry run python test.py
