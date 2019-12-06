@@ -1,0 +1,13 @@
+name: App 2 Workflow
+
+on:
+  push:
+    paths:
+      - 'app2/*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup python
+        run: echo "Something in app2 must have changed.."
