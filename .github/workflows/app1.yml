@@ -9,13 +9,6 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
-    services:
-      selenium:
-        image: selenium/standalone-chrome:3.141.59-vanadium
-        ports:
-          - 4444:4444
-        volumes:
-          - /dev/shm:/dev/shm
     steps:
       - uses: actions/checkout@v1
         with:
@@ -47,8 +40,14 @@ jobs:
       - name: Install python packages
         run: poetry install
 
+  test_unit:
+    needs: build
+    steps:
       - name: Run unit tests
         run: poetry run python app1/test_unit.py
 
+  test_selenium:
+    needs: build
+    steps:
       - name: Run selenium tests
         run: poetry run python app1/test_selenium.py
