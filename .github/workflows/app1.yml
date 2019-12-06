@@ -33,7 +33,7 @@ jobs:
       - name: Cache python packages
         uses: actions/cache@v1
         with:
-          path: ~/.venv
+          path: .venv
           key: ${{ runner.os }}-python-${{ hashFiles('poetry.lock') }}
 
       - name: Install python packages
