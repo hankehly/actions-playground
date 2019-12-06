@@ -1,17 +1,22 @@
 name: CI
-
 on: [push]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v1
-    - name: Run a one-line script
-      run: echo Hello, world!
-    - name: Run a multi-line script
-      run: |
-        echo Add other actions to build,
-        echo test, and deploy your project.
+      - uses: actions/checkout@v1
+
+      - name: Install python packages
+        uses: abatilo/actions-poetry@v1.1.0
+        with:
+          python_version: "3.8.0"
+          poetry_version: "0.12.17"
+          args: install
+
+      - name: Run tests
+        uses: abatilo/actions-poetry@v1.1.0
+        with:
+          python_version: "3.8.0"
+          poetry_version: "0.12.17"
+          args: run python test.py
