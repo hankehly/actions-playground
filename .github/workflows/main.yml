@@ -18,10 +18,10 @@ jobs:
           curl -O -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py
           chmod +x get-poetry.py
           python get-poetry.py --preview
-          export PATH="$HOME/.poetry/bin:$PATH"
+          echo "::add-path::$HOME/.poetry/bin"
 
       - name: Install python packages
-        run: $HOME/.poetry/bin/poetry install
+        run: poetry install
 
       - name: Run tests
         run: poetry run python test.py
