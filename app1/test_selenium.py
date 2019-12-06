@@ -8,11 +8,8 @@ from selenium.webdriver.common.keys import Keys
 class PythonOrgSearch(unittest.TestCase):
     def setUp(self):
         options = Options()
-
         options.add_argument("--headless")
-        # options.add_argument("--disable-dev-shm-usage")
-
-        self.driver = webdriver.Chrome(chrome_options=options)
+        self.driver = webdriver.Chrome(options=options)
 
     def test_search_in_python_org(self):
         self.driver.get("http://www.python.org")

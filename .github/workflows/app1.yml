@@ -22,7 +22,7 @@ jobs:
       - name: Install chromedriver
         uses: nanasess/setup-chromedriver@master
         with:
-          chromedriver-version: "79.0.3945.36"
+          chromedriver-version: "78.0.3904.105"
 
       - name: Install poetry
         run: |
