@@ -1,0 +1,52 @@
+name: App 1 Workflow
+
+#on:
+#  push:
+#    paths:
+#      - 'app1/*'
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          fetch-depth: 1
+
+      - name: Setup python
+        uses: actions/setup-python@v1
+        with:
+          python-version: "3.8.0"
+
+      - name: Install chromedriver
+        uses: nanasess/setup-chromedriver@master
+        with:
+          chromedriver-version: "78.0.3904.105"
+
+      - name: Install poetry
+        run: |
+          curl -O -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py
+          chmod +x get-poetry.py
+          python get-poetry.py --preview
+          echo "::add-path::$HOME/.poetry/bin"
+
+      - name: Configure poetry
+        run: |
+          poetry config virtualenvs.create true
+          poetry config virtualenvs.in-project true
+
+      - name: Cache python packages
+        uses: actions/cache@v1
+        with:
+          path: .venv
+          key: ${{ runner.os }}-python-${{ hashFiles('poetry.lock') }}
+
+      - name: Install python packages
+        run: poetry install
+
+      - name: Run unit tests
+        run: poetry run python app1/test_unit.py
+
+      - name: Run selenium tests
+        run: poetry run python app1/test_selenium.py
