@@ -67,3 +67,9 @@ jobs:
 
       - name: run selenium tests
         run: poetry run python app1/test_selenium.py
+
+      - name: upload selenium artifacts
+        uses: actions/upload-artifact@v1
+        with:
+          name: artifacts
+          path: artifacts
