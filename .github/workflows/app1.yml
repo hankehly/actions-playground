@@ -37,8 +37,6 @@ jobs:
           path: .venv
           key: ${{ runner.os }}-python-${{ hashFiles('poetry.lock') }}
 
-      - run: echo ${{ steps.pycache.outputs.cache-hit }}
-
       - run: poetry install
         if: steps.pycache.outputs.cache-hit != 'true'
 
