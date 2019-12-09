@@ -18,19 +18,14 @@ jobs:
         with:
           python-version: "3.8.0"
 
-#      - name: install poetry
-#        run: |
-#          curl -O -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py
-#          python get-poetry.py --preview
-#          echo "::add-path::$HOME/.poetry/bin"
-      - name: install poetry
-        uses: ./.github/actions/poetry
+      - uses: dschep/install-poetry-action@v1.2
+        with:
+          preview: true
 
       - name: configure poetry
         run: |
           poetry config virtualenvs.create true
           poetry config virtualenvs.in-project true
-          poetry check
 
       - uses: actions/cache@v1
         id: pycache
@@ -65,18 +60,14 @@ jobs:
         with:
           python-version: "3.8.0"
 
-      - name: install poetry
-        run: |
-          curl -O -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py
-          chmod +x get-poetry.py
-          python get-poetry.py --preview
-          echo "::add-path::$HOME/.poetry/bin"
+      - uses: dschep/install-poetry-action@v1.2
+        with:
+          preview: true
 
       - name: configure poetry
         run: |
           poetry config virtualenvs.create true
           poetry config virtualenvs.in-project true
-          poetry check
 
       - uses: actions/cache@v1
         with:
@@ -104,18 +95,14 @@ jobs:
         with:
           python-version: "3.8.0"
 
-      - name: install poetry
-        run: |
-          curl -O -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py
-          chmod +x get-poetry.py
-          python get-poetry.py --preview
-          echo "::add-path::$HOME/.poetry/bin"
+      - uses: dschep/install-poetry-action@v1.2
+        with:
+          preview: true
 
       - name: configure poetry
         run: |
           poetry config virtualenvs.create true
           poetry config virtualenvs.in-project true
-          poetry check
 
       - uses: actions/cache@v1
         with:
