@@ -18,12 +18,15 @@ jobs:
         with:
           python-version: "3.8.0"
 
-      - name: install and configure poetry
+      - name: install poetry
         run: |
           curl -O -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py
           chmod +x get-poetry.py
           python get-poetry.py --preview
           echo "::add-path::$HOME/.poetry/bin"
+
+      - name: configure poetry
+        run: |
           poetry config virtualenvs.create true
           poetry config virtualenvs.in-project true
           poetry check
@@ -61,12 +64,15 @@ jobs:
         with:
           python-version: "3.8.0"
 
-      - name: install and configure poetry
+      - name: install poetry
         run: |
           curl -O -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py
           chmod +x get-poetry.py
           python get-poetry.py --preview
           echo "::add-path::$HOME/.poetry/bin"
+
+      - name: configure poetry
+        run: |
           poetry config virtualenvs.create true
           poetry config virtualenvs.in-project true
           poetry check
@@ -97,12 +103,15 @@ jobs:
         with:
           python-version: "3.8.0"
 
-      - name: install and configure poetry
+      - name: install poetry
         run: |
           curl -O -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py
           chmod +x get-poetry.py
           python get-poetry.py --preview
           echo "::add-path::$HOME/.poetry/bin"
+
+      - name: configure poetry
+        run: |
           poetry config virtualenvs.create true
           poetry config virtualenvs.in-project true
           poetry check
