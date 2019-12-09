@@ -10,27 +10,23 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: checkout code
-        uses: actions/checkout@v1
+      - uses: actions/checkout@v1
         with:
           fetch-depth: 1
 
-      - name: setup python
-        uses: actions/setup-python@v1
+      - uses: actions/setup-python@v1
         with:
           python-version: "3.8.0"
 
-      - name: install poetry
+      - name: install and configure poetry
         run: |
           curl -O -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py
           chmod +x get-poetry.py
           python get-poetry.py --preview
           echo "::add-path::$HOME/.poetry/bin"
-
-      - name: configure poetry
-        run: |
           poetry config virtualenvs.create true
           poetry config virtualenvs.in-project true
+          poetry check
 
       - name: cache python packages
         id: pycache
@@ -50,99 +46,80 @@ jobs:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
 
-      - name: install js packages
+      - run: npm ci
         if: steps.cache.outputs.nodecache != 'true'
-        run: npm ci
 
   test_unit:
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - name: checkout code
-        uses: actions/checkout@v1
+      - uses: actions/checkout@v1
         with:
           fetch-depth: 1
 
-      - name: setup python
-        uses: actions/setup-python@v1
+      - uses: actions/setup-python@v1
         with:
           python-version: "3.8.0"
 
-      - name: install poetry
+      - name: install and configure poetry
         run: |
           curl -O -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py
           chmod +x get-poetry.py
           python get-poetry.py --preview
           echo "::add-path::$HOME/.poetry/bin"
-
-      - name: configure poetry
-        run: |
           poetry config virtualenvs.create true
           poetry config virtualenvs.in-project true
+          poetry check
 
-      - name: cache python packages
-        id: pycache
-        uses: actions/cache@v1
+      - uses: actions/cache@v1
         with:
           path: .venv
           key: ${{ runner.os }}-python-${{ hashFiles('poetry.lock') }}
 
-      - name: cache node packages
-        id: nodecache
-        uses: actions/cache@v1
+      - uses: actions/cache@v1
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
 
-      - name: run python unit tests
-        run: poetry run python app1/test_unit.py
-
-      - name: run node unit tests
-        run: npm test
+      - run: npm ci
+      - run: poetry run python app1/test_unit.py
+      - run: npm test
 
   test_ui:
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - name: checkout code
-        uses: actions/checkout@v1
+      - uses: actions/checkout@v1
         with:
           fetch-depth: 1
 
-      - name: setup python
-        uses: actions/setup-python@v1
+      - uses: actions/setup-python@v1
         with:
           python-version: "3.8.0"
 
-      - name: install poetry
+      - name: install and configure poetry
         run: |
           curl -O -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py
           chmod +x get-poetry.py
           python get-poetry.py --preview
           echo "::add-path::$HOME/.poetry/bin"
-
-      - name: configure poetry
-        run: |
           poetry config virtualenvs.create true
           poetry config virtualenvs.in-project true
+          poetry check
 
-      - name: cache python packages
-        id: pycache
-        uses: actions/cache@v1
+      - uses: actions/cache@v1
         with:
           path: .venv
           key: ${{ runner.os }}-python-${{ hashFiles('poetry.lock') }}
 
-      - name: install chromedriver
-        uses: nanasess/setup-chromedriver@master
+      - uses: nanasess/setup-chromedriver@master
         with:
           chromedriver-version: "78.0.3904.105"
 
-      - name: run selenium tests
-        run: poetry run python app1/test_selenium.py
+      - run: poetry run python app1/test_selenium.py
 
-      - name: upload selenium artifacts
-        uses: actions/upload-artifact@v1
+      - uses: actions/upload-artifact@v1
+        # if: failure() << only perform this step if the previous step failed
         with:
           name: artifacts
           path: artifacts
