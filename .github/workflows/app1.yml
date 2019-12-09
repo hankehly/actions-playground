@@ -37,10 +37,10 @@ jobs:
           path: .venv
           key: ${{ runner.os }}-python-${{ hashFiles('poetry.lock') }}
 
-      - run: echo ${{ toJSON(steps.pycache.outputs) }}
+      - run: echo ${{ steps.pycache.outputs.cache-hit }}
 
       - run: poetry install
-        if: steps.cache.outputs.pycache != 'true'
+        if: steps.pycache.outputs.cache-hit != 'true'
 
       - uses: actions/cache@v1
         id: nodecache
@@ -49,7 +49,7 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
 
       - run: npm ci
-        if: steps.cache.outputs.nodecache != 'true'
+        if: steps.nodecache.outputs.cache-hit != 'true'
 
   test_unit:
     runs-on: ubuntu-latest
