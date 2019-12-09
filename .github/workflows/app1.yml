@@ -40,6 +40,9 @@ jobs:
       - run: poetry install
         if: steps.pycache.outputs.cache-hit != 'true'
 
+      # It is not recommended to cache node_modules
+      # as it can break across Node versions and won't work with npm ci
+      # https://github.com/actions/cache/blob/master/examples.md#node---npm
       - uses: actions/cache@v1
         id: nodecache
         with:
