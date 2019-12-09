@@ -1,0 +1,11 @@
+name: poetry
+author: hank
+description: description
+inputs:
+  version:
+    description: foo
+    required: true
+    default: x
+runs:
+  using: node12
+  main: main.js
