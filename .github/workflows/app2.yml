@@ -20,4 +20,4 @@ jobs:
             --url https://api.github.com/repos/${{ github.repository }}/commits/${{ github.sha }}/pulls \
             --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
             --header 'content-type: application/json' \
-            --header 'accept: application/vnd.github.groot-preview+json' | jq
+            --header 'accept: application/vnd.github.groot-preview+json' | jq .
