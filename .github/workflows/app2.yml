@@ -13,14 +13,22 @@ jobs:
       - name: Print message
         run: echo "Something in app2 must have changed.."
 
-      - uses: octokit/request-action@v2.x
-        id: get_pull_requests
-        with:
-          route: GET /repos/:repository/commits/:commit_sha/pulls
-          repository: ${{ github.repository }}
-          commit_sha: ${{ github.sha }}
-          mediaType: '{"previews": ["groot"]}'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#      - uses: octokit/request-action@v2.x
+#        id: get_pull_requests
+#        with:
+#          route: GET /repos/:repository/commits/:commit_sha/pulls
+#          repository: ${{ github.repository }}
+#          commit_sha: ${{ github.sha }}
+#          mediaType: '{"previews": ["groot"]}'
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - run: "echo PRs: ${{ steps.get_pull_requests.outputs.data }}"
+      - name: Create issue using REST API
+        run: |
+          curl --request GET \
+            --url https://api.github.com/repos/${{ github.repository }}/commits/${{ github.sha }}/pulls \
+            --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
+            --header 'content-type: application/json' \
+            --header 'application/vnd.github.groot-preview+json'
+
+#      - run: "echo PRs: ${{ steps.get_pull_requests.outputs.data }}"
