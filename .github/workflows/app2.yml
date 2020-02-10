@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'app2/*'
+      - '.github/workflows/app2.yml'
 
 jobs:
   build:
@@ -11,3 +12,15 @@ jobs:
     steps:
       - name: Print message
         run: echo "Something in app2 must have changed.."
+
+      - uses: octokit/request-action@v2.x
+        id: get_pull_requests
+        with:
+          route: GET /repos/:repository/commits/:commit_sha/pulls
+          repository: ${{ github.repository }}
+          commit_sha: ${{ github.sha }}
+          mediaType: '{"previews": ["groot"]}'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - run: "echo PRs: ${{ steps.get_pull_requests.outputs.data }}"
