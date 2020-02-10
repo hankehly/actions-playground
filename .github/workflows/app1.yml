@@ -1,10 +1,11 @@
 name: App 1 Workflow
 
-#on:
-#  push:
-#    paths:
-#      - 'app1/*'
-on: [push]
+on:
+  push:
+    paths:
+      - 'app1/*'
+      - '.github/workflows/app1.yml'
+#on: [push]
 
 jobs:
   build:
